@@ -1,0 +1,40 @@
+services:
+  - type: web
+    name: MusicAPPAPI
+    env: php
+    region: frankfurt
+    buildCommand: |
+      apt-get update && \
+      apt-get install -y curl git unzip && \
+      curl -sS https://getcomposer.org/installer | php && \
+      php composer.phar install --optimize-autoloader --no-dev && \
+      curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
+      apt-get install -y nodejs && \
+      npm install && \
+      npm run prod && \
+      php artisan key:generate && \
+      php artisan config:cache && \
+      php artisan route:cache && \
+      php artisan view:cache
+    startCommand: php artisan serve --host 0.0.0.0 --port 10000
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        sync: false
+      - key: APP_DEBUG
+        value: 'false'
+      - key: APP_URL
+        value: https://musicappapi-mr67.onrender.com
+      - key: DB_CONNECTION
+        value: your-database-connection
+      - key: DB_HOST
+        value: your-database-host
+      - key: DB_PORT
+        value: your-database-port
+      - key: DB_DATABASE
+        value: your-database-name
+      - key: DB_USERNAME
+        value: your-database-username
+      - key: DB_PASSWORD
+        value: your-database-password

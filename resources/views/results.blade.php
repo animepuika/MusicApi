@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Search Results</title>
     <link rel="stylesheet" href="/css/app.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body class="bg-gradient-to-r from-pink-200 to-purple-200 flex items-center justify-center min-h-screen font-sans">
 <div class="bg-white p-10 rounded-lg shadow-md w-full max-w-2xl">

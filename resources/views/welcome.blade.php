@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/app.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Music Search</title>
     <style>
         body {
@@ -60,11 +61,20 @@
 <section class="search-container">
     <h1 class="title">Lyric Matcher</h1>
     <form action="{{ route('search') }}" method="POST">
+        @csrf
         <input type="text" name="lyrics" class="search-box" placeholder="What Song are you trying to find?">
         <br>
         <button type="submit" class="search-button">Search</button>
     </form>
 </section>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
 </body>
 </html>
 

@@ -12,9 +12,8 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        'https://vast-everglades-89224-1913d086a2cc.herokuapp.com/',
-        'http://vast-everglades-89224-1913d086a2cc.herokuapp.com/search',
         '/',
-        '/search'
+        '/search',
+        '/results'
     ];
 }

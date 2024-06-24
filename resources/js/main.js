@@ -1,7 +1,10 @@
 // main.js
 import MusixmatchAPI from './api.js';
 
-const musixmatch = new MusixmatchAPI(MUSIXMATCH_API_KEY);
+console.log('main.js loaded'); // Debugging output
+console.log('API Key:', apiKey); // Debugging output
+
+const musixmatch = new MusixmatchAPI(apiKey);
 
 document.addEventListener('DOMContentLoaded', () => {
     const searchForm = document.getElementById('search-form');
@@ -12,7 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
         searchForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const lyrics = document.getElementById('lyrics').value;
+            console.log('Lyrics:', lyrics); // Debugging output
             const tracks = await musixmatch.searchTracks(lyrics);
+            console.log('Tracks:', tracks); // Debugging output
             renderResults(tracks);
         });
     }

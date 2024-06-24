@@ -71,7 +71,8 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    const MUSIXMATCH_API_KEY = "{{ env('MUSIXMATCH_API_KEY') }}";
+    const apiKey = "{{ env('MUSIXMATCH_API_KEY') }}";
+    console.log('API Key:', apiKey); // Debugging output
 </script>
 <script type="module" src="/js/main.js"></script>
 </body>

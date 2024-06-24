@@ -16,3 +16,4 @@ class MusixmatchAPI {
 }
 
 export default MusixmatchAPI;
+

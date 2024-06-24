@@ -39,12 +39,14 @@
             padding: 10px;
             text-align: left;
             border-bottom: 1px solid #ddd;
+            color: purple;
         }
-        .pagination {
+        .pagination, .back-button {
             display: flex;
             justify-content: center;
+            margin-top: 20px;
         }
-        .pagination button {
+        .pagination button, .back-button button {
             padding: 10px 20px;
             margin: 0 5px;
             border: none;
@@ -52,6 +54,23 @@
             background-color: black;
             color: white;
             cursor: pointer;
+        }
+        @media (max-width: 600px) {
+            .results-container {
+                width: 100%;
+                padding: 10px;
+            }
+            .results-title {
+                font-size: 20px;
+            }
+            .results-table th, .results-table td {
+                padding: 8px;
+                font-size: 14px;
+            }
+            .pagination button, .back-button button {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -81,6 +100,9 @@
             <button onclick="window.location.href='{{ route('results', ['lyrics' => $lyrics, 'page' => $page - 1]) }}'">Previous</button>
         @endif
         <button onclick="window.location.href='{{ route('results', ['lyrics' => $lyrics, 'page' => $page + 1]) }}'">Next</button>
+    </div>
+    <div class="back-button">
+        <button onclick="window.location.href='{{ route('welcome') }}'">Go Back and Search Again</button>
     </div>
 </section>
 </body>

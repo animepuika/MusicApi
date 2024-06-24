@@ -3,18 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class MusixmatchController extends Controller
 {
-    public function index()
-    {
-        return view('welcome');
-    }
-
     public function search(Request $request)
     {
+        $apiKey = env('MUSIXMATCH_API_KEY');
         $lyrics = $request->input('lyrics');
-        return view('results', compact('lyrics'));
+        $page = $request->input('page', 1);
+        $pageSize = 7;
+
+        $response = Http::get('https://api.musixmatch.com/ws/1.1/track.search', [
+            'q_lyrics' => $lyrics,
+            'apikey' => $apiKey,
+            'page_size' => $pageSize,
+            'page' => $page,
+            'format' => 'json'
+        ]);
+
+        return $response->json();
     }
 }
 

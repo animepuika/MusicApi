@@ -1,10 +1,5 @@
 // main.js
-import MusixmatchAPI from './api.js';
-
 console.log('main.js loaded'); // Debugging output
-console.log('API Key:', apiKey); // Debugging output
-
-const musixmatch = new MusixmatchAPI(apiKey);
 
 document.addEventListener('DOMContentLoaded', () => {
     const searchForm = document.getElementById('search-form');
@@ -16,15 +11,28 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const lyrics = document.getElementById('lyrics').value;
             console.log('Lyrics:', lyrics); // Debugging output
-            const tracks = await musixmatch.searchTracks(lyrics);
+            const tracks = await searchTracks(lyrics);
             console.log('Tracks:', tracks); // Debugging output
             renderResults(tracks);
         });
     }
 
+    async function searchTracks(lyrics, page = 1) {
+        const response = await fetch('/api/musixmatch/search', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ lyrics, page })
+        });
+        const data = await response.json();
+        return data.message.body.track_list || [];
+    }
+
     async function loadPage(page) {
         const lyrics = document.getElementById('lyrics').value;
-        const tracks = await musixmatch.searchTracks(lyrics, page);
+        const tracks = await searchTracks(lyrics, page);
         renderResults(tracks, page);
     }
 
@@ -74,4 +82,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
 

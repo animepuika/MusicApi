@@ -1,8 +1,7 @@
 // main.js
 import MusixmatchAPI from './api.js';
 
-const apiKey = "6a5fa0b7ea788d0d6b94d4ce3263eb68"; // Replace with your actual API key
-const musixmatch = new MusixmatchAPI(apiKey);
+const musixmatch = new MusixmatchAPI(MUSIXMATCH_API_KEY);
 
 document.addEventListener('DOMContentLoaded', () => {
     const searchForm = document.getElementById('search-form');

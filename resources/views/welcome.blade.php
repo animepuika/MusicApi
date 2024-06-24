@@ -70,6 +70,9 @@
 <div id="pagination-container" class="flex justify-center mt-4"></div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    const MUSIXMATCH_API_KEY = "{{ env('MUSIXMATCH_API_KEY') }}";
+</script>
 <script type="module" src="/js/main.js"></script>
 </body>
 </html>

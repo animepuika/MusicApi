@@ -3,40 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Search Results</title>
     <link rel="stylesheet" href="/css/app.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Music Search Results</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #ffcccc, #ccccff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .results-container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: black;
+            text-shadow: 1px 1px 2px purple;
+        }
+        .results-table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        .results-table th, .results-table td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        .results-table th {
+            background-color: #f0f0f0;
+        }
+        .pagination {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .pagination button {
+            margin: 0 5px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+        .pagination button.active {
+            background-color: purple;
+        }
+        @media (max-width: 600px) {
+            .results-container {
+                width: 90%;
+            }
+            .results-table th, .results-table td {
+                padding: 5px;
+            }
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-r from-pink-200 to-purple-200 flex items-center justify-center min-h-screen font-sans">
-<div class="bg-white p-10 rounded-lg shadow-md w-full max-w-2xl">
-    <h1 class="text-2xl font-bold text-center mb-6">Results</h1>
-        <table class="min-w-full bg-white">
-            <thead>
-            <tr>
-                <th class="py-2 px-4 bg-gray-200 text-purple-700">Artist</th>
-                <th class="py-2 px-4 bg-gray-200 text-purple-700">Album</th>
-                <th class="py-2 px-4 bg-gray-200 text-purple-700">Track</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach ($tracks as $track)
-                <tr class="border-b border-green-100">
-                    <td class="py-2 px-4">{{ $track['track']['artist_name'] }}</td>
-                    <td class="py-2 px-4">{{ $track['track']['album_name'] }}</td>
-                    <td class="py-2 px-4">{{ $track['track']['track_name'] }}</td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
-    <div class="flex justify-between items-center mt-6">
-        <a href="{{ route('home') }}" class="text-purple-700">&larr; Home</a>
+<body>
+<div class="results-container">
+    <h1 class="title">Search Results</h1>
+    <div id="results-container">
+        <!-- Results will be dynamically inserted here -->
     </div>
-    <div>
-        {{ $paginator->links('vendor.pagination.tailwind') }}
+    <div id="pagination-container" class="pagination">
+        <!-- Pagination buttons will be dynamically inserted here -->
     </div>
 </div>
-</body>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="module" src="/js/main.js"></script>
+</body>
 </html>
 
 

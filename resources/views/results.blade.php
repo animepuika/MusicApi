@@ -3,106 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/app.css">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Music Search Results</title>
-    <style>
-        body {
-            background: linear-gradient(to right, #ffcccc, #ccccff);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-        .results-container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            max-width: 800px;
-        }
-        .results-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .results-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        .results-table th, .results-table td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-            color: purple;
-        }
-        .pagination, .back-button {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        .pagination button, .back-button button {
-            padding: 10px 20px;
-            margin: 0 5px;
-            border: none;
-            border-radius: 5px;
-            background-color: black;
-            color: white;
-            cursor: pointer;
-        }
-        @media (max-width: 600px) {
-            .results-container {
-                width: 100%;
-                padding: 10px;
-            }
-            .results-title {
-                font-size: 20px;
-            }
-            .results-table th, .results-table td {
-                padding: 8px;
-                font-size: 14px;
-            }
-            .pagination button, .back-button button {
-                padding: 8px 16px;
-                font-size: 14px;
-            }
-        }
-    </style>
 </head>
-<body>
-<section class="results-container">
-    <h1 class="results-title">Results</h1>
-    <table class="results-table">
+<body class="bg-gradient-to-r from-pink-300 to-purple-300 flex items-center justify-center min-h-screen p-4">
+<section class="bg-white p-6 rounded-lg shadow-lg w-full max-w-3xl">
+    <h1 class="text-2xl font-bold text-center mb-6">Results</h1>
+    <table class="w-full table-auto mb-6">
         <thead>
-        <tr>
-            <th>Artist</th>
-            <th>Album</th>
-            <th>Track</th>
+        <tr class="bg-gray-200">
+            <th class="py-2 px-4 text-left text-purple-600">Artist</th>
+            <th class="py-2 px-4 text-left text-purple-600">Album</th>
+            <th class="py-2 px-4 text-left text-purple-600">Track</th>
         </tr>
         </thead>
         <tbody>
         @foreach($results as $result)
-            <tr>
-                <td>{{ $result['track']['artist_name'] }}</td>
-                <td>{{ $result['track']['album_name'] }}</td>
-                <td>{{ $result['track']['track_name'] }}</td>
+            <tr class="border-b">
+                <td class="py-2 px-4">{{ $result['track']['artist_name'] }}</td>
+                <td class="py-2 px-4">{{ $result['track']['album_name'] }}</td>
+                <td class="py-2 px-4">{{ $result['track']['track_name'] }}</td>
             </tr>
         @endforeach
         </tbody>
     </table>
-    <div class="pagination">
+    <div class="flex justify-center space-x-4 mb-4">
         @if($page > 1)
-            <button onclick="window.location.href='{{ route('results', ['lyrics' => $lyrics, 'page' => $page - 1]) }}'">Previous</button>
+            <button onclick="window.location.href='{{ route('results', ['lyrics' => $lyrics, 'page' => $page - 1]) }}'" class="px-4 py-2 bg-black text-white rounded-lg hover:bg-purple-700 transition duration-300">Previous</button>
         @endif
-        <button onclick="window.location.href='{{ route('results', ['lyrics' => $lyrics, 'page' => $page + 1]) }}'">Next</button>
+        <button onclick="window.location.href='{{ route('results', ['lyrics' => $lyrics, 'page' => $page + 1]) }}'" class="px-4 py-2 bg-black text-white rounded-lg hover:bg-purple-700 transition duration-300">Next</button>
     </div>
-    <div class="back-button">
-        <button onclick="window.location.href='{{ route('welcome') }}'">Search Page</button>
+    <div class="flex justify-center">
+        <button onclick="window.location.href='{{ route('welcome') }}'" class="px-4 py-2 bg-black text-white rounded-lg hover:bg-purple-700 transition duration-300">Go Back and Search Again</button>
     </div>
 </section>
 </body>

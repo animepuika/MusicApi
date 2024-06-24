@@ -1,6 +1,6 @@
 import MusixmatchAPI from './api.js';
 
-const apiKey = 'YOUR_MUSIXMATCH_API_KEY'; // Replace with your actual API key
+const apiKey = "6a5fa0b7ea788d0d6b94d4ce3263eb68"; // Replace with your actual API key
 const musixmatch = new MusixmatchAPI(apiKey);
 
 document.addEventListener('DOMContentLoaded', () => {

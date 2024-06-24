@@ -12,7 +12,7 @@ class MusixmatchController extends Controller
         $apiKey = env('MUSIXMATCH_API_KEY');
         $lyrics = $request->input('lyrics');
         $page = $request->input('page', 1);
-        $pageSize = 7;
+        $pageSize = 10;
 
         $response = Http::get('https://api.musixmatch.com/ws/1.1/track.search', [
             'q_lyrics' => $lyrics,

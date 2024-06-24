@@ -102,7 +102,7 @@
         <button onclick="window.location.href='{{ route('results', ['lyrics' => $lyrics, 'page' => $page + 1]) }}'">Next</button>
     </div>
     <div class="back-button">
-        <button onclick="window.location.href='{{ route('welcome') }}'">Go Back and Search Again</button>
+        <button onclick="window.location.href='{{ route('welcome') }}'">Search Page</button>
     </div>
 </section>
 </body>

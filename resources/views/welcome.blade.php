@@ -74,7 +74,7 @@
     const apiKey = "{{ env('MUSIXMATCH_API_KEY') }}";
     console.log('API Key:', apiKey); // Debugging output
 </script>
-<script type="module" src="../../public/js/main.js"></script>
+<script type="module" src="/js/main.js"></script>
 </body>
 </html>
 

@@ -63,7 +63,7 @@
         @csrf
         <input type="text" name="lyrics" id="lyrics" class="search-box" placeholder="What Song are you trying to find?">
         <br>
-        <button type="submit" class="search-button">Home</button>
+        <button type="submit" class="search-button">Search</button>
     </form>
 </section>
 </body>

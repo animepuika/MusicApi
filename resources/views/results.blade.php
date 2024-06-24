@@ -66,65 +66,23 @@
             <th>Track</th>
         </tr>
         </thead>
-        <tbody id="results-table-body">
-        <!-- Results will be inserted here dynamically -->
+        <tbody>
+        @foreach($results as $result)
+            <tr>
+                <td>{{ $result['track']['artist_name'] }}</td>
+                <td>{{ $result['track']['album_name'] }}</td>
+                <td>{{ $result['track']['track_name'] }}</td>
+            </tr>
+        @endforeach
         </tbody>
     </table>
     <div class="pagination">
-        <button id="prev-page">Previous</button>
-        <button id="next-page">Next</button>
+        @if($page > 1)
+            <button onclick="window.location.href='{{ route('results', ['lyrics' => $lyrics, 'page' => $page - 1]) }}'">Previous</button>
+        @endif
+        <button onclick="window.location.href='{{ route('results', ['lyrics' => $lyrics, 'page' => $page + 1]) }}'">Next</button>
     </div>
 </section>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="module">
-    $(document).ready(function() {
-        const lyrics = @json(request()->query('lyrics'));
-        const page = @json(request()->query('page', 1));
-
-        if (lyrics) {
-            getResults(lyrics, page);
-        }
-
-        function getResults(lyrics, page) {
-            $.ajax({
-                url: `{{ route('results') }}`,
-                data: {
-                    lyrics: lyrics,
-                    page: page
-                },
-                success: function(response) {
-                    const trackList = response.message.body.track_list;
-                    const resultsTableBody = $('#results-table-body');
-                    resultsTableBody.empty();
-                    trackList.forEach(track => {
-                        const trackInfo = track.track;
-                        resultsTableBody.append(`
-                            <tr>
-                                <td>${trackInfo.artist_name}</td>
-                                <td>${trackInfo.album_name}</td>
-                                <td>${trackInfo.track_name}</td>
-                            </tr>
-                        `);
-                    });
-                },
-                error: function() {
-                    alert('Error retrieving data');
-                }
-            });
-        }
-
-        $('#prev-page').click(function() {
-            const prevPage = Math.max(1, parseInt(page) - 1);
-            window.location.href = `{{ route('results') }}?lyrics=${encodeURIComponent(lyrics)}&page=${prevPage}`;
-        });
-
-        $('#next-page').click(function() {
-            const nextPage = parseInt(page) + 1;
-            window.location.href = `{{ route('results') }}?lyrics=${encodeURIComponent(lyrics)}&page=${nextPage}`;
-        });
-    });
-</script>
 </body>
 </html>
 

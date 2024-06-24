@@ -22,7 +22,9 @@ class MusixmatchController extends Controller
             'format' => 'json'
         ]);
 
-        return $response->json();
+        $results = $response->json()['message']['body']['track_list'];
+
+        return view('results', compact('results', 'lyrics', 'page'));
     }
 }
 

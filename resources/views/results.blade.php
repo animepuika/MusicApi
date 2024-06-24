@@ -17,74 +17,114 @@
             font-family: Arial, sans-serif;
         }
         .results-container {
-            text-align: center;
-            background: white;
+            background-color: white;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
             max-width: 800px;
-            width: 100%;
-            margin-top: 20px;
         }
-        .title {
+        .results-title {
             font-size: 24px;
             font-weight: bold;
-            color: black;
-            text-shadow: 1px 1px 2px purple;
+            margin-bottom: 20px;
+            text-align: center;
         }
         .results-table {
             width: 100%;
-            margin-top: 20px;
             border-collapse: collapse;
+            margin-bottom: 20px;
         }
         .results-table th, .results-table td {
             padding: 10px;
-            border: 1px solid #ccc;
             text-align: left;
-        }
-        .results-table th {
-            background-color: #f0f0f0;
+            border-bottom: 1px solid #ddd;
         }
         .pagination {
-            margin-top: 20px;
             display: flex;
             justify-content: center;
         }
         .pagination button {
-            margin: 0 5px;
             padding: 10px 20px;
+            margin: 0 5px;
             border: none;
             border-radius: 5px;
             background-color: black;
             color: white;
             cursor: pointer;
         }
-        .pagination button.active {
-            background-color: purple;
-        }
-        @media (max-width: 600px) {
-            .results-container {
-                width: 90%;
-            }
-            .results-table th, .results-table td {
-                padding: 5px;
-            }
-        }
     </style>
 </head>
 <body>
-<div class="results-container">
-    <h1 class="title">Search Results</h1>
-    <div id="results-container">
-        <!-- Results will be dynamically inserted here -->
+<section class="results-container">
+    <h1 class="results-title">Results</h1>
+    <table class="results-table">
+        <thead>
+        <tr>
+            <th>Artist</th>
+            <th>Album</th>
+            <th>Track</th>
+        </tr>
+        </thead>
+        <tbody id="results-table-body">
+        <!-- Results will be inserted here dynamically -->
+        </tbody>
+    </table>
+    <div class="pagination">
+        <button id="prev-page">Previous</button>
+        <button id="next-page">Next</button>
     </div>
-    <div id="pagination-container" class="pagination">
-        <!-- Pagination buttons will be dynamically inserted here -->
-    </div>
-</div>
+</section>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="module" src="/js/main.js"></script>
+<script type="module">
+    $(document).ready(function() {
+        const lyrics = @json(request()->query('lyrics'));
+        const page = @json(request()->query('page', 1));
+
+        if (lyrics) {
+            getResults(lyrics, page);
+        }
+
+        function getResults(lyrics, page) {
+            $.ajax({
+                url: `{{ route('results') }}`,
+                data: {
+                    lyrics: lyrics,
+                    page: page
+                },
+                success: function(response) {
+                    const trackList = response.message.body.track_list;
+                    const resultsTableBody = $('#results-table-body');
+                    resultsTableBody.empty();
+                    trackList.forEach(track => {
+                        const trackInfo = track.track;
+                        resultsTableBody.append(`
+                            <tr>
+                                <td>${trackInfo.artist_name}</td>
+                                <td>${trackInfo.album_name}</td>
+                                <td>${trackInfo.track_name}</td>
+                            </tr>
+                        `);
+                    });
+                },
+                error: function() {
+                    alert('Error retrieving data');
+                }
+            });
+        }
+
+        $('#prev-page').click(function() {
+            const prevPage = Math.max(1, parseInt(page) - 1);
+            window.location.href = `{{ route('results') }}?lyrics=${encodeURIComponent(lyrics)}&page=${prevPage}`;
+        });
+
+        $('#next-page').click(function() {
+            const nextPage = parseInt(page) + 1;
+            window.location.href = `{{ route('results') }}?lyrics=${encodeURIComponent(lyrics)}&page=${nextPage}`;
+        });
+    });
+</script>
 </body>
 </html>
 

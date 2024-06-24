@@ -59,22 +59,13 @@
 <body>
 <section class="search-container">
     <h1 class="title">Lyric Matcher</h1>
-    <form id="search-form">
+    <form id="search-form" action="{{ route('results') }}" method="GET">
         @csrf
         <input type="text" name="lyrics" id="lyrics" class="search-box" placeholder="What Song are you trying to find?">
         <br>
         <button type="submit" class="search-button">Search</button>
     </form>
 </section>
-<div id="results-container" class="bg-white p-10 rounded-lg shadow-md w-full max-w-2xl mt-6"></div>
-<div id="pagination-container" class="flex justify-center mt-4"></div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    const apiKey = "{{ env('MUSIXMATCH_API_KEY') }}";
-    console.log('API Key:', apiKey); // Debugging output
-</script>
-<script type="module" src="/js/main.js"></script>
 </body>
 </html>
 

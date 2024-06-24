@@ -7,6 +7,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Music Search Results</title>
     <style>
+        body {
+            background: linear-gradient(to right, #ffcccc, #ccccff);
+        }
         .results-container {
             background-color: white;
             padding: 20px;
@@ -57,7 +60,7 @@
         }
     </style>
 </head>
-<body class="bg-gradient-to-r from-pink-300 to-purple-300 flex items-center justify-center min-h-screen p-4">
+<body class="flex items-center justify-center min-h-screen p-4">
 <section class="results-container">
     <h1 class="results-title">Results</h1>
     <table class="results-table w-full border-collapse mb-6">
@@ -85,7 +88,7 @@
         <button onclick="window.location.href='{{ route('results', ['lyrics' => $lyrics, 'page' => $page + 1]) }}'" class="px-4 py-2">Next</button>
     </div>
     <div class="back-button">
-        <button onclick="window.location.href='{{ route('welcome') }}'" class="px-4 py-2">Go Back and Search Again</button>
+        <button onclick="window.location.href='{{ route('welcome') }}'" class="px-4 py-2">Home</button>
     </div>
 </section>
 </body>

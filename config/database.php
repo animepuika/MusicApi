@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Str;
 
-$DATABASE_URL = parse_url("postgres://bvwqpwdmbciaxh:96c464a8e2d57e1ba93d7941a3f841c516e3c858da6d468e86202d612947614b@ec2-44-194-102-142.compute-1.amazonaws.com:5432/dbbs43o1ud2sqs");
+// Heroku sets DATABASE_URL; locally, use the DB_* values in .env.
+$DATABASE_URL = parse_url(env('DATABASE_URL', ''));
 
 return [
 
@@ -64,11 +65,11 @@ return [
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DB_URL'),
-            'host' => $DATABASE_URL['host'],
-            'port' => $DATABASE_URL['port'],
-            'database' => ltrim($DATABASE_URL['path'], "/"),
-            'username' => $DATABASE_URL['user'],
-            'password' => $DATABASE_URL['pass'],
+            'host' => $DATABASE_URL['host'] ?? env('DB_HOST', '127.0.0.1'),
+            'port' => $DATABASE_URL['port'] ?? env('DB_PORT', '5432'),
+            'database' => ltrim($DATABASE_URL['path'] ?? '', "/") ?: env('DB_DATABASE', 'forge'),
+            'username' => $DATABASE_URL['user'] ?? env('DB_USERNAME', 'root'),
+            'password' => $DATABASE_URL['pass'] ?? env('DB_PASSWORD', ''),
             'charset' => env('DB_CHARSET', 'utf8'),
             'prefix' => '',
             'prefix_indexes' => true,
